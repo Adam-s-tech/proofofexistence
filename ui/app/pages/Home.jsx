@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import Jumbo from '../components/Jumbo.jsx'
 import Search from '../components/Search.jsx'
 import HashList from '../components/HashList.jsx'
-
-import UploadFile from '../components/UploadFile.jsx'
 import Status from '../components/Status.jsx'
 
 import crypto from '../crypto'
@@ -16,7 +14,7 @@ class Home extends Component {
     super(props)
     this.state = {
       // UI state
-      showSearch: false,
+      showSearch: true,
       unconfirmed: [],
       confirmed: [],
 
@@ -48,11 +46,6 @@ class Home extends Component {
       .catch(function (error) {
         console.log(error)
       })
-  }
-
-  handleToggleSearch (e) {
-    e.preventDefault()
-    this.setState({ showSearch: !this.state.showSearch })
   }
 
   handleSearch (e) {
@@ -111,33 +104,18 @@ class Home extends Component {
           />
 
         <div
-          id='uploads'
           className='row justify-content-md-center'
           style={{textAlign: 'center'}}
           >
-          <h3 class='card-title'>
-            Select a document and have it certified in the Bitcoin blockchain<br />
-            Only {docproofPrice.amount} {docproofPrice.code}
-          </h3>
           <div className='card col-lg-8 no-border' style={{margin: 0}}>
-
             <div className='no-border'>
               {
-                !hash
-                  ? <UploadFile
-                    files={files}
-                    handleToggleSearch={(e) => this.handleToggleSearch(e)}
-                    handleAddFile={(e) => this.handleAddFile(e)}
-                    hashingProgress={hashingProgress}
-                    hash={hash}
-                    maxFileSize={
-                      150 // in Mo
-                    }
-                    />
-                  : <Status
+                hash
+                  ? <Status
                     hash={hash}
                     key={hash}
                     />
+                    : null
                 }
             </div>
             {

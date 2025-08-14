@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import btcConvert from 'bitcoin-convert'
 
-import PaymentRequired from './status/PaymentRequired.jsx'
+import PaymentHalt from './status/PaymentHalt.jsx'
 import Confirming from './status/Confirming.jsx'
 import Confirmed from './status/Confirmed.jsx'
 
@@ -198,11 +198,7 @@ class Status extends Component {
         {
           {
             'paymentRequired': (
-              <PaymentRequired
-                handleUpdateStatus={e => this.handleUpdateStatus(e)}
-                BTCPrice={BTCPrice}
-                mBTCPrice={mBTCPrice}
-                paymentAddress={paymentAddress}
+              <PaymentHalt
             />
           ),
             'confirming': (
@@ -233,16 +229,19 @@ class Status extends Component {
           : null
         }
 
-        <div class='card-body'>
-          <a
-            href={`/detail/${hash}`}
-            title='Permalink to your document'
-            class='card-link'
-            >
-            Permalink to your registration
-          </a>
+        { status !== "paymentRequired"
+          ? <div class='card-body'>
+              <a
+                href={`/detail/${hash}`}
+                title='Permalink to your document'
+                class='card-link'
+                >
+                Permalink to your registration
+              </a>
+            </div>
+          : null
+        }
         </div>
-      </div>
     )
   }
 }
